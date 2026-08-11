@@ -1,0 +1,89 @@
+{
+  "moneyline_crosscheck": {
+    "lines_compared": 30978,
+    "mismatches": 0,
+    "match_rate_pct": 100.0,
+    "examples": []
+  },
+  "schedule": {
+    "2007-08": {
+      "expected": 1230,
+      "found": 1230,
+      "ok": true
+    },
+    "2008-09": {
+      "expected": 1230,
+      "found": 1230,
+      "ok": true
+    },
+    "2009-10": {
+      "expected": 1230,
+      "found": 1230,
+      "ok": true
+    },
+    "2010-11": {
+      "expected": 1230,
+      "found": 1230,
+      "ok": true
+    },
+    "2011-12": {
+      "expected": 990,
+      "found": 990,
+      "ok": true
+    },
+    "2012-13": {
+      "expected": 1229,
+      "found": 1229,
+      "ok": true
+    },
+    "2013-14": {
+      "expected": 1230,
+      "found": 1230,
+      "ok": true
+    },
+    "2014-15": {
+      "expected": 1230,
+      "found": 1230,
+      "ok": true
+    },
+    "2015-16": {
+      "expected": 1230,
+      "found": 1230,
+      "ok": true
+    },
+    "2016-17": {
+      "expected": 1230,
+      "found": 1230,
+      "ok": true
+    },
+    "2017-18": {
+      "expected": 1230,
+      "found": 1230,
+      "ok": true
+    },
+    "2018-19": {
+      "expected": 1230,
+      "found": 1230,
+      "ok": true
+    },
+    "2019-20": {
+      "expected": 971,
+      "found": 971,
+      "ok": true
+    }
+  },
+  "schedule_all_ok": true,
+  "total_games": 15490,
+  "outcomes": {
+    "rows": 15490,
+    "valid_W_or_L": 15490,
+    "invalid": 0
+  },
+  "outcome_crosscheck": {
+    "outcomes_compared": 15490,
+    "mismatches": 0
+  },
+  "missing_moneylines": 1,
+  "passed": true,
+  "failures": []
+}

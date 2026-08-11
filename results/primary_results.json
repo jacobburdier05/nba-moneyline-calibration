@@ -1,0 +1,189 @@
+{
+  "design": {
+    "primary_threshold": 0.7,
+    "alpha": 0.05,
+    "power": 0.8,
+    "breakeven_pp_primary": 3.012642471591748,
+    "breakeven_pp_primary_p10": 2.3459942547079398,
+    "breakeven_pp_primary_p90": 3.722332542547953,
+    "breakeven_pp_all_favorites": 2.60527156708209,
+    "breakeven_pp_tail": 3.0178616299952408,
+    "mde_pp_primary": 1.3281295286017554,
+    "mde_pp_tail": 2.6575430078710793,
+    "illustrative_power": {
+      "n": 74,
+      "assumed_probability": 0.85,
+      "effect_pp": 1.7,
+      "power_pct": 6.942708215975399
+    }
+  },
+  "primary": {
+    "n": 6840,
+    "observed_wins": 5529,
+    "expected_wins": 5489.448401309577,
+    "observed_rate_pct": 80.83333333333333,
+    "implied_rate_pct": 80.25509358639734,
+    "gap_pp": 0.5782397469360074,
+    "z": 1.219751456958278,
+    "p_value": 0.2225591084469436,
+    "se_pp": 0.474063583722193,
+    "share_of_sample_pct": 44.55735782685167
+  },
+  "calibration_regression": {
+    "n": 15351,
+    "intercept": -0.04682625359105911,
+    "intercept_ci": [
+      -0.10696074444487688,
+      0.01330823726275867
+    ],
+    "slope": 1.0493271142421479,
+    "slope_ci": [
+      0.9822339664661371,
+      1.1164202620181585
+    ],
+    "joint_wald_chi2": 2.4539975348141043,
+    "joint_wald_df": 2,
+    "joint_wald_p": 0.2931711334072541
+  },
+  "buckets": [
+    {
+      "n": 4064,
+      "observed_wins": 2213,
+      "expected_wins": 2253.1668984332937,
+      "observed_rate_pct": 54.45374015748031,
+      "implied_rate_pct": 55.44209887877199,
+      "gap_pp": -0.9883587212916753,
+      "z": -1.2694292765234845,
+      "p_value": 0.204287999917246,
+      "se_pp": 0.7785851008560621,
+      "bucket": "(0.50, 0.60]",
+      "holm_p": 0.817151999668984
+    },
+    {
+      "n": 4447,
+      "observed_wins": 2851,
+      "expected_wins": 2883.9571120628702,
+      "observed_rate_pct": 64.11063638407916,
+      "implied_rate_pct": 64.85174526788555,
+      "gap_pp": -0.7411088838063916,
+      "z": -1.0370288714916762,
+      "p_value": 0.29972240198220934,
+      "se_pp": 0.7146463364519166,
+      "bucket": "(0.60, 0.70]",
+      "holm_p": 0.899167205946628
+    },
+    {
+      "n": 1933,
+      "observed_wins": 1413,
+      "expected_wins": 1399.286620630749,
+      "observed_rate_pct": 73.09881013967926,
+      "implied_rate_pct": 72.38937509729689,
+      "gap_pp": 0.7094350423823598,
+      "z": 0.6980207642041626,
+      "p_value": 0.4851642086093714,
+      "se_pp": 1.0163523476142018,
+      "bucket": "(0.70, 0.75]",
+      "holm_p": 0.9703284172187427
+    },
+    {
+      "n": 1661,
+      "observed_wins": 1314,
+      "expected_wins": 1285.2421047644843,
+      "observed_rate_pct": 79.10897049969897,
+      "implied_rate_pct": 77.37761016041446,
+      "gap_pp": 1.731360339284507,
+      "z": 1.6875524724323514,
+      "p_value": 0.09149716920858744,
+      "se_pp": 1.0259594101918579,
+      "bucket": "(0.75, 0.80]",
+      "holm_p": 0.4574858460429372
+    },
+    {
+      "n": 3246,
+      "observed_wins": 2802,
+      "expected_wins": 2804.919675914345,
+      "observed_rate_pct": 86.32162661737523,
+      "implied_rate_pct": 86.41157350321458,
+      "gap_pp": -0.08994688583934488,
+      "z": -0.1507570893642174,
+      "p_value": 0.8801673370200243,
+      "se_pp": 0.596634534526202,
+      "bucket": "(0.80, 1.00]",
+      "holm_p": 0.9703284172187427
+    }
+  ],
+  "returns": {
+    "all_favorites": {
+      "n": 15351,
+      "return_pct": -4.064540435816774,
+      "ci_low_pct": -5.126779380918008,
+      "ci_high_pct": -3.00230149071554
+    },
+    "all_underdogs": {
+      "n": 15351,
+      "return_pct": -3.9083410043988325,
+      "ci_low_pct": -6.565233174135463,
+      "ci_high_pct": -1.2514488346622028
+    },
+    "favorites_above_70": {
+      "n": 6840,
+      "return_pct": -2.89607047637783,
+      "ci_low_pct": -4.037378667083318,
+      "ci_high_pct": -1.7547622856723413
+    },
+    "by_bucket": [
+      {
+        "n": 4064,
+        "return_pct": -5.370197075510554,
+        "ci_low_pct": -8.036904789289126,
+        "ci_high_pct": -2.703489361731983,
+        "bucket": "(0.50, 0.60]",
+        "expected_if_calibrated_pct": -3.75512687807824
+      },
+      {
+        "n": 4447,
+        "return_pct": -4.668575951635721,
+        "ci_low_pct": -6.771778215178176,
+        "ci_high_pct": -2.565373688093265,
+        "bucket": "(0.60, 0.70]",
+        "expected_if_calibrated_pct": -3.540209164076418
+      },
+      {
+        "n": 1933,
+        "return_pct": -2.7057331882629665,
+        "ci_low_pct": -5.339725842560333,
+        "ci_high_pct": -0.07174053396559917,
+        "bucket": "(0.70, 0.75]",
+        "expected_if_calibrated_pct": -3.6461210397537616
+      },
+      {
+        "n": 1661,
+        "return_pct": -1.500387413479251,
+        "ci_low_pct": -3.9377798286599477,
+        "ci_high_pct": 0.9370050017014458,
+        "bucket": "(0.75, 0.80]",
+        "expected_if_calibrated_pct": -3.627369791031241
+      },
+      {
+        "n": 3246,
+        "return_pct": -3.723597138546828,
+        "ci_low_pct": -5.053209722085842,
+        "ci_high_pct": -2.3939845550078145,
+        "bucket": "(0.80, 1.00]",
+        "expected_if_calibrated_pct": -3.603656119932335
+      }
+    ]
+  },
+  "raw_probability_artefact": {
+    "n": 8014,
+    "observed_wins": 6332,
+    "expected_wins": 6532.714021514701,
+    "observed_rate_pct": 79.01172947342151,
+    "implied_rate_pct": 81.51627179329549,
+    "gap_pp": -2.504542319873983,
+    "z": -5.8962061920616,
+    "p_value": 3.7195413669319824e-09,
+    "se_pp": 0.42477183434425886,
+    "note": "Testing against raw, vig-inclusive implied probabilities. Under proportional vig removal this gap is the bookmaker margin, not bettor behavior."
+  }
+}
