@@ -23,8 +23,12 @@ needed favorites to beat their vig-free probability by **3.01 percentage
 points** to break even. The entire confidence interval for the observed gap
 sits below half of that.
 
-**In this sample, favorite mispricing was too small to exploit** in
-aggregate and in every season and odds range examined.
+**In this sample, the aggregate favorite calibration gap was too small to
+exploit** in every season and odds range examined, and the estimate holds
+under six variance estimators that allow correlation within seasons and
+within teams. One qualification: of five vig-removal rules, four leave the
+gap below its own break-even threshold and one does not. See the
+robustness section below, which reports it rather than burying it.
 
 A methodological caution is quantified along the way: testing raw implied
 probabilities without removing the vig manufactures an apparent favorite
