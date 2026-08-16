@@ -164,3 +164,128 @@ in 2019-20.
 A paper whose entire results section reproduces from raw data on an
 independent implementation is in unusually good shape. Fix the five items
 above and the numbers are airtight.
+
+---
+
+# Addendum: robustness findings added August 2026
+
+Three analyses were added after an external review asked whether the
+conclusion survives (a) dependence between observations, (b) a different
+vig-removal rule, and (c) a transparent power calculation. All three are in
+`src/` and run as steps 6 and 7 of `run_all.sh`. Two came back clean. One
+qualifies a claim in the paper and is recorded here for the same reason the
+rest of this file exists.
+
+## 6. Power normalization does not agree with the other four rules
+
+`src/normalization_robustness.py` re-runs the primary test under five
+vig-removal rules.
+
+| Rule | n | Gap (pp) | p | Break-even (pp) | Verdict |
+|---|---|---|---|---|---|
+| None, raw probabilities | 8,014 | -2.50 | <.001 | — | artifact |
+| Proportional (primary) | 6,840 | +0.58 | .223 | 3.01 | below |
+| Additive, equal margin | 7,120 | -0.60 | .186 | 1.88 | below |
+| Shin (1993) | 7,120 | -0.60 | .186 | 1.88 | below |
+| Constant odds ratio | 7,202 | -0.74 | .104 | 1.79 | below |
+| **Power** | 7,211 | **-1.31** | **.004** | 1.24 | **exceeds** |
+
+Four of five leave the gap below that rule's own break-even requirement and
+none of those four is significant. Power normalization produces a gap that
+is significant at p = .004 and exceeds its own break-even threshold by 0.07
+percentage points, in the direction of betting underdogs.
+
+This does not overturn the paper, but it does bound the claim. The
+conclusion is robust to the normalization choice under four of five rules,
+not under all of them. Power normalization is also the rule that behaves
+least plausibly at extreme prices. Both facts are stated in the manuscript
+rather than left in the code.
+
+## 7. Shin's rule and the additive rule are the same thing here
+
+For a two-outcome book, Shin (1993) reduces exactly to the equal-margin
+(additive) rule. Verified symbolically to 40 decimal digits, numerically
+across 19,139 synthetic books spanning booksums 1.005 to 1.080, and across
+all 15,351 games in the sample; agreement is to machine precision
+everywhere except the one underround game where Shin is undefined.
+
+Two implementation notes, both of which produced wrong numbers before they
+were caught:
+
+- The textbook Shin expression `[sqrt(z^2 + a) - z] / (2(1-z))` suffers
+  catastrophic cancellation as z approaches 1. In double precision the root
+  finder converged on values whose probabilities summed to 0.98 rather than
+  1. Multiplying by the conjugate gives `2q^2 / (P(sqrt(z^2+a) + z))`,
+  which is algebraically identical and numerically stable.
+- One game in the archive is quoted with a **booksum below one** (+240
+  against -200, booksum 0.9608). Shin's model assumes a positive margin and
+  has no valid solution there, so that game falls back to proportional. It
+  is outside the primary group. It is also independent evidence that this
+  series is a composite rather than a single book's quote, since no single
+  book would post a negative margin.
+
+## 8. Dependence does not move the primary result
+
+`src/dependence_robustness.py` re-estimates the gap under variance
+estimators that allow correlation within seasons and within teams. The
+point estimate is +0.58 pp in every specification; only the standard error
+changes.
+
+| Variance estimator | Clusters | SE (pp) | p |
+|---|---|---|---|
+| Poisson-binomial (primary) | — | 0.47 | .223 |
+| Independent, classical | — | 0.47 | .218 |
+| Clustered by season | 13 | 0.39 | .134 |
+| Clustered by favorite team | 32 | 0.53 | .276 |
+| Clustered by underdog team | 33 | 0.50 | .246 |
+| Two-way, season and favorite team | 13 | 0.48 | .224 |
+
+None rejects calibration. A team-blocked bootstrap over 32 favorite teams
+gives a 95 percent interval of -0.52 to +1.57 pp, wider than the
+season-blocked -0.19 to +1.26 and still containing zero.
+
+**But the secondary calibration regression is not equally stable.** Its
+joint Wald p is .293 with classical errors, .221 clustering on favorite
+team, .181 on underdog team, .085 on season, and **.037 two-way on season
+and team**, which would reject perfect calibration at .05. Cluster-robust
+variance is unreliable when the cluster count is small, and thirteen
+seasons is small enough that the estimator is known to understate variance,
+so this is weak evidence. It is reported anyway. A reader who prefers that
+estimate should treat the calibration slope as unresolved rather than
+confirmed.
+
+## 9. The power claim now has a curve behind it
+
+`src/power_curve.py` produces Figure 3 and `results/power_analysis.json`.
+The paper previously asserted that biases "in the range commonly claimed,
+roughly 1.7 to 5.1 percentage points, would have been detected here with
+near certainty." That is now quantified rather than asserted:
+
+| True gap (pp) | Power |
+|---|---|
+| 1.00 | 55.9% |
+| 1.33 (MDE) | 80.0% |
+| 1.70 | 94.8% |
+| 2.00 | 98.8% |
+| 3.01 (break-even) | >99.9% |
+| 5.10 | >99.9% |
+
+The standard error is 0.4741 pp, from the heterogeneous per-game null
+variance rather than a pooled p(1-p).
+
+## 10. Cochran Q: the statistic was right, the documentation was not
+
+An external reviewer suggested Cochran's Q may be the wrong test for season
+heterogeneity, on the grounds that Cochran's Q is a test for related binary
+treatments. That conflates two different statistics that share a name. The
+meta-analytic Cochran Q heterogeneity statistic used here is the standard
+tool for asking whether stratum estimates differ by more than sampling
+noise, and it is what `src/robustness.py` computes.
+
+The criticism was still useful, because the paper stated the result without
+stating the construction. The manuscript now writes out the formula:
+Q is the sum over seasons of w times the squared deviation of the season gap
+from the inverse-variance-weighted mean, with w the inverse of the
+Poisson-binomial null variance, referred to chi-squared on k-1 degrees of
+freedom. No change to the statistic; the corrected value remains Q = 8.37,
+p = .756, I-squared 0 percent, as recorded in item 3 above.
