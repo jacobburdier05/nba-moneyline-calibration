@@ -43,8 +43,8 @@ not bettor behavior.
 
 Underpowered bucket tests are the recurring problem in this literature. A
 74-game bucket of extreme favorites, the kind these studies routinely
-report, has about **7 percent power** to detect a 1.7 percentage point
-deviation. Both a significant result and a null result from a test like
+report, has about **11 percent power** to detect a deviation the size of
+this sample's own break-even margin, 3.01 percentage points. Both a significant result and a null result from a test like
 that are uninformative.
 
 This design fixes the analysis plan first, sets the smallest effect worth
@@ -61,9 +61,9 @@ pip install -r requirements.txt
 bash run_all.sh
 ```
 
-Runtime is about one minute on a laptop. `run_all.sh` runs verification,
+Runtime is about three minutes on a laptop. `run_all.sh` runs verification,
 builds the dataset, runs the confirmatory analyses, runs the robustness
-checks, and regenerates both figures. Every number in the paper is printed
+checks, regenerates all three figures, and verifies the Appendix A proof. Every number in the paper is printed
 to the console and written to `results/`.
 
 ## The paper
@@ -95,7 +95,7 @@ results/                     machine-readable output, JSON and CSV
 figures/                     Figures 1, 2 and 3, PNG and PDF at 300 dpi
 paper/
   NBA_Moneyline_Calibration_Paper.docx    manuscript
-  NBA_Moneyline_Calibration_Paper.pdf     manuscript, 18 pages
+  NBA_Moneyline_Calibration_Paper.pdf     manuscript, 22 pages
 docs/
   pre_specification.md       what the pre-specification claim rests on
   errata.md                  corrections between paper and code
@@ -205,11 +205,23 @@ calibration regression is less stable: joint Wald p is .293 classical, .085
 clustered on season, .037 two-way on season and team, the last on only 13
 clusters where cluster-robust variance is unreliable.
 
-**Power.** 80% at 1.33 pp, 95% at 1.7 pp, effectively certain at 3 pp and above.
+**Power.** 80% at the 1.33 pp minimum detectable effect, >99.9% at the 3.01 pp
+break-even requirement. The MDE is the conventional normal approximation; the
+exact Poisson-binomial inversion gives 1.3242 pp, a difference of 0.004 pp,
+and the exact two-sided rejection region is 5,425 wins or fewer or 5,554 or
+more with true size .0484.
+
+Every mark on Figure 3 is computed from this sample. An earlier draft marked
+1.7 and 5.1 pp as the smallest and largest favorite-bias effects in the cited
+literature. Neither could be traced to any source in that citation set: six of
+the eight cited papers report rates of return or point-spread cover rates
+rather than win-probability calibration gaps, and the one literature review
+among them reports no magnitudes at all. They were removed rather than
+re-sourced. See `docs/errata.md` item 11.
 
 ![Power of the primary test against a true calibration gap](figures/figure3_power.png)
 
-*Figure 3. Power against a true calibration gap. Marked: the 1.33 pp minimum detectable effect, the 1.7 and 5.1 pp ends of the range claimed in prior work, and the 3.01 pp break-even requirement.*
+*Figure 3. Power against a true calibration gap. Every mark is computed from this sample: the observed +0.58 pp gap, the 1.33 pp minimum detectable effect, and the 3.01 pp break-even requirement.*
 
 **Seasons:** season gaps range -2.82 to +2.52 pp, none rejecting
 (smallest p = .107). Cochran Q = 8.37 on 12 df, p = .756, I-squared 0
@@ -239,9 +251,10 @@ The result does **not** rule out:
 - inefficiency in opening lines
 - edges available through best-price shopping across books
 
-The sample is regular season only and ends in March 2020, before the rapid
-expansion of legal betting changed market structure. The conclusions
-describe that era.
+The sample is regular season only and ends in March 2020, where the source
+archive ends. It therefore predates the subsequent expansion of US legal
+sports betting; no claim is made here about whether that expansion changed
+market behavior.
 
 ## Requirements
 
