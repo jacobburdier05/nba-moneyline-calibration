@@ -1,5 +1,12 @@
 {
   "primary_n": 6840,
+  "mde_pp_exact_poisson_binomial": 1.324188819361158,
+  "mde_approximation_error_pp": 0.0039407092405974176,
+  "exact_critical_region": {
+    "reject_at_or_below": 5425,
+    "reject_at_or_above": 5554,
+    "exact_size": 0.04839668242492303
+  },
   "alpha": 0.05,
   "target_power": 0.8,
   "null_model": "Poisson-binomial, heterogeneous per-game variance",

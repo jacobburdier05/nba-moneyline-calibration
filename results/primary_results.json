@@ -13,8 +13,8 @@
     "illustrative_power": {
       "n": 74,
       "assumed_probability": 0.85,
-      "effect_pp": 1.7,
-      "power_pct": 6.942708215975399
+      "effect_pp": 3.012642471591748,
+      "power_pct": 11.218658951747056
     }
   },
   "primary": {
