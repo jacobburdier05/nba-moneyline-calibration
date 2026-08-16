@@ -1,0 +1,127 @@
+{
+  "gap_by_variance_estimator": [
+    {
+      "variance_estimator": "Independent (classical OLS)",
+      "gap_pp": 0.5782397469359944,
+      "se_pp": 0.4691355535704125,
+      "z": 1.2325643250340577,
+      "p_value": 0.21773835376554063,
+      "clusters": 6840,
+      "ci_low_pp": -0.341265938062014,
+      "ci_high_pp": 1.497745431934003
+    },
+    {
+      "variance_estimator": "Poisson-binomial (primary test)",
+      "gap_pp": 0.5782397469359948,
+      "se_pp": 0.474063583722193,
+      "z": 1.2197514569582513,
+      "p_value": 0.2225591084469536,
+      "clusters": 6840,
+      "ci_low_pp": -0.3509248771595035,
+      "ci_high_pp": 1.507404371031493
+    },
+    {
+      "variance_estimator": "Clustered by season",
+      "gap_pp": 0.5782397469359944,
+      "se_pp": 0.38589719657138544,
+      "z": 1.498429509396626,
+      "p_value": 0.13402169425181992,
+      "clusters": 13,
+      "ci_low_pp": -0.178118758343921,
+      "ci_high_pp": 1.3345982522159099
+    },
+    {
+      "variance_estimator": "Clustered by favorite team",
+      "gap_pp": 0.5782397469359944,
+      "se_pp": 0.5307717090933698,
+      "z": 1.0894321174798607,
+      "p_value": 0.2759633746088731,
+      "clusters": 32,
+      "ci_low_pp": -0.46207280288701036,
+      "ci_high_pp": 1.6185522967589994
+    },
+    {
+      "variance_estimator": "Clustered by underdog team",
+      "gap_pp": 0.5782397469359944,
+      "se_pp": 0.4988448958065906,
+      "z": 1.159157388993685,
+      "p_value": 0.24639203676120447,
+      "clusters": 33,
+      "ci_low_pp": -0.3994962488449231,
+      "ci_high_pp": 1.555975742716912
+    },
+    {
+      "variance_estimator": "Two-way: season and favorite team",
+      "gap_pp": 0.5782397469359944,
+      "se_pp": 0.47507990073846285,
+      "z": 1.2171420976496379,
+      "p_value": 0.22355015598686268,
+      "clusters": 13,
+      "ci_low_pp": -0.35291685851139276,
+      "ci_high_pp": 1.5093963523833818
+    }
+  ],
+  "bootstrap_season": {
+    "clusters": 13,
+    "reps": 10000,
+    "seed": 20260714,
+    "ci_low_pp": -0.1913946516321564,
+    "ci_high_pp": 1.2648995272554913,
+    "sd_pp": 0.3730331533887155
+  },
+  "bootstrap_favorite_team": {
+    "clusters": 32,
+    "reps": 10000,
+    "seed": 20260714,
+    "ci_low_pp": -0.5237212388220343,
+    "ci_high_pp": 1.5679539689641218,
+    "sd_pp": 0.5312781725612282
+  },
+  "calibration_regression": [
+    {
+      "variance_estimator": "Independent (classical)",
+      "intercept": -0.04682625359105911,
+      "intercept_se": 0.030681426458930353,
+      "slope": 1.0493271142421479,
+      "slope_se": 0.03423182686275507,
+      "joint_wald_chi2": 2.4539975348141043,
+      "joint_wald_p": 0.2931711334072541
+    },
+    {
+      "variance_estimator": "Clustered by season",
+      "intercept": -0.04682625359105911,
+      "intercept_se": 0.021345071655130277,
+      "slope": 1.0493271142421479,
+      "slope_se": 0.03063743406705456,
+      "joint_wald_chi2": 4.922701403889324,
+      "joint_wald_p": 0.0853196317114115
+    },
+    {
+      "variance_estimator": "Clustered by favorite team",
+      "intercept": -0.04682625359105911,
+      "intercept_se": 0.02751014195244837,
+      "slope": 1.0493271142421479,
+      "slope_se": 0.034139242513239985,
+      "joint_wald_chi2": 3.016288038983929,
+      "joint_wald_p": 0.22132036328828372
+    },
+    {
+      "variance_estimator": "Clustered by underdog team",
+      "intercept": -0.04682625359105911,
+      "intercept_se": 0.02750477428055228,
+      "slope": 1.0493271142421479,
+      "slope_se": 0.029090748925756176,
+      "joint_wald_chi2": 3.4186176977373144,
+      "joint_wald_p": 0.18099084142314462
+    },
+    {
+      "variance_estimator": "Two-way: season and favorite team",
+      "intercept": -0.04682625359105911,
+      "intercept_se": 0.018464287026691083,
+      "slope": 1.0493271142421479,
+      "slope_se": 0.032131010113749664,
+      "joint_wald_chi2": 6.598181183782926,
+      "joint_wald_p": 0.036916724508983464
+    }
+  ]
+}
