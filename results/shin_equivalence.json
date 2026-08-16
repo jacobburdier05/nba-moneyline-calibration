@@ -1,0 +1,14 @@
+{
+  "games_tested": 15350,
+  "games_excluded_underround": 1,
+  "step2_max_abs_error": 3.3306690738754696e-16,
+  "step3_max_abs_error": 2.7755575615628914e-16,
+  "equivalence_max_abs_error": 2.7755575615628914e-16,
+  "z_consistency_max_abs_error": 1.455302892083843e-14,
+  "z_min": 0.0037453733526085684,
+  "z_max": 0.07181166074446636,
+  "z_mean": 0.03839174826716773,
+  "z_in_unit_interval": true,
+  "sum_max_abs_error": 2.220446049250313e-16,
+  "all_steps_verified": true
+}
