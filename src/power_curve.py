@@ -30,6 +30,21 @@ power(MDE) = 1-beta, which for the normal approximation is
 The variance is the heterogeneous per-game one, not a single pooled
 p(1-p), so the curve reflects the actual price distribution in the sample.
 
+That MDE formula is the conventional two-sided normal approximation, not an
+exact inversion of the Poisson-binomial power function. The two are not
+guaranteed to agree, so this script computes the exact version as well: it
+builds the exact Poisson-binomial distribution by DFT of the characteristic
+function, finds the exact two-sided critical region under the null, and
+inverts exact power for the 80 percent MDE. The paper reports both.
+
+None of the marks on the figure comes from outside this dataset. An earlier
+draft marked "1.7" and "5.1" as the smallest and largest effects claimed in
+prior work. Those two numbers could not be traced to any cited source: of
+the eight papers cited, six report rates of return or point-spread cover
+rates rather than win-probability calibration gaps, and the one literature
+review in the citation set (Newall & Cortis 2021) reports no effect
+magnitudes at all. They were removed rather than re-sourced.
+
 Run:  python src/power_curve.py
 """
 
@@ -41,7 +56,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from scipy import stats
+from scipy import optimize, stats
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -71,6 +86,47 @@ def se_pp(p):
     return float(np.sqrt(np.sum(p * (1.0 - p))) / len(p) * 100.0)
 
 
+def poisson_binomial_pmf(probs, chunk=400):
+    """Exact Poisson-binomial pmf via DFT of the characteristic function.
+
+    Uses the conjugate symmetry of the characteristic function so only half
+    the frequencies are evaluated, and chunks the outer product so memory
+    stays bounded at n in the thousands.
+    """
+    m = len(probs)
+    N = m + 1
+    l = np.arange(N // 2 + 1)
+    z = np.exp(2j * np.pi * l / N)
+    half = np.zeros(len(l), dtype=complex)
+    for s0 in range(0, len(l), chunk):
+        e0 = min(s0 + chunk, len(l))
+        half[s0:e0] = np.log(1 - probs + np.outer(z[s0:e0], probs)).sum(axis=1)
+    half = np.exp(half)
+    cf = np.empty(N, dtype=complex)
+    cf[:len(l)] = half
+    tail = np.conj(half[1:][::-1])
+    cf[N - len(l) + 1:] = tail[:N - len(l)]
+    return np.clip(np.real(np.fft.fft(cf)) / N, 0.0, None)
+
+
+def exact_critical_region(probs, alpha=ALPHA):
+    """Two-sided exact rejection region for the count of favorite wins."""
+    pmf = poisson_binomial_pmf(probs)
+    cdf = np.cumsum(pmf)
+    k = np.arange(len(pmf))
+    lo = int(k[np.searchsorted(cdf, alpha / 2.0)])
+    hi = int(k[np.searchsorted(cdf, 1.0 - alpha / 2.0)])
+    size = float(cdf[lo - 1] + (1.0 - cdf[hi]))
+    return lo, hi, size
+
+
+def exact_power_at(delta_pp, probs, lo, hi):
+    """Exact power against a uniform shift of delta_pp in every game."""
+    q = np.clip(probs + delta_pp / 100.0, 1e-12, 1.0 - 1e-12)
+    cdf = np.cumsum(poisson_binomial_pmf(q))
+    return float(cdf[lo - 1] + (1.0 - cdf[hi]))
+
+
 def power_at(delta_pp, se, alpha=ALPHA):
     z = stats.norm.ppf(1.0 - alpha / 2.0)
     lam = np.asarray(delta_pp, dtype=float) / se
@@ -89,18 +145,27 @@ def main():
     breakeven = float(primary["breakeven_pp"].mean())
     observed = float((primary["fav_won"].to_numpy() - p).mean() * 100.0)
 
-    # (x, label, colour, text offset in points, ha, va) -- offsets are set
-    # by hand because the marks sit close together on the shoulder of the
-    # curve and automatic placement overlaps them
+    # Every mark is computed from this sample. Offsets are set by hand
+    # because the marks sit close together on the shoulder of the curve.
     marks = [
-        (mde, f"MDE {mde:.2f}", ACCENT, (-7, -6), "right", "top"),
-        (1.7, "1.7, smallest in cited work", MUTED, (8, -26), "left", "top"),
+        (observed, f"observed gap {observed:+.2f}", MUTED, (9, -2), "left", "top"),
+        (mde, f"MDE {mde:.2f}", ACCENT, (-8, -4), "right", "top"),
         (breakeven, f"break-even {breakeven:.2f}", FLAG, (0, -13), "center", "top"),
-        (5.1, "5.1, largest in cited work", MUTED, (0, -13), "center", "top"),
     ]
+
+    # exact Poisson-binomial inversion, to check the normal approximation
+    lo, hi, exact_size = exact_critical_region(p)
+    mde_exact = float(optimize.brentq(
+        lambda d: exact_power_at(d, p, lo, hi) - TARGET_POWER, 0.5, 3.0,
+        xtol=1e-4))
 
     table = {
         "primary_n": int(len(p)),
+        "mde_pp_exact_poisson_binomial": mde_exact,
+        "mde_approximation_error_pp": abs(mde_exact - float(mde)),
+        "exact_critical_region": {"reject_at_or_below": lo - 1,
+                                  "reject_at_or_above": hi + 1,
+                                  "exact_size": exact_size},
         "alpha": ALPHA,
         "target_power": TARGET_POWER,
         "null_model": "Poisson-binomial, heterogeneous per-game variance",
@@ -153,7 +218,9 @@ def main():
              f"Two-sided test at alpha = {ALPHA}, n = {len(p):,} favorites "
              f"above .70 vig-free implied probability. Standard error "
              f"{se:.3f} pp from the heterogeneous per-game null variance. "
-             f"Observed gap {observed:+.2f} pp.",
+             f"All three marks are computed from this sample. The 80% MDE "
+             f"shown is the normal approximation, {mde:.4f} pp; the exact "
+             f"Poisson-binomial inversion gives {mde_exact:.4f} pp.",
              fontsize=6.5, color=MUTED, ha="left", wrap=True)
 
     os.makedirs(FIG_DIR, exist_ok=True)
@@ -172,7 +239,11 @@ def main():
     print(f"  null model               Poisson-binomial, per-game variance")
     print(f"  standard error           {se:.4f} pp")
     print(f"  z_alpha, z_beta          {z_a:.4f}, {z_b:.4f}")
-    print(f"  MDE = (z_a + z_b) * SE   {mde:.4f} pp")
+    print(f"  MDE, normal approx       {mde:.4f} pp")
+    print(f"  MDE, exact Poisson-binom {mde_exact:.4f} pp  "
+          f"(difference {abs(mde_exact - mde):.4f} pp)")
+    print(f"  exact critical region    reject if wins <= {lo - 1} or >= {hi + 1}, "
+          f"size {exact_size:.5f}")
     print(f"  break-even requirement   {breakeven:.4f} pp")
     print(f"  observed gap             {observed:+.4f} pp")
     print()

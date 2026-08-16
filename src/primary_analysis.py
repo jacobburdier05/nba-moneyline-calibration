@@ -150,11 +150,16 @@ def main():
     }
 
     # The illustrative power figure quoted in the Introduction: a narrow
-    # bucket of 74 extreme favorites, of the kind common in this
-    # literature, tested against a 1.7 percentage point deviation.
-    # Stated explicitly so the number is reproducible: n = 74 games at an
-    # assumed win probability of .85.
-    n_illustrative, p_illustrative, effect_illustrative = 74, 0.85, 1.7
+    # bucket of 74 favorites, the kind of slice these studies routinely
+    # report, tested against a deviation the size of THIS sample's own
+    # break-even requirement. An earlier draft tested it against 1.7 pp,
+    # described as the smallest effect claimed in prior work; that number
+    # could not be traced to any cited source and was removed. Anchoring on
+    # the break-even margin keeps the comparison inside this dataset and
+    # needs no citation. Stated explicitly so it is reproducible: n = 74
+    # games at an assumed win probability of .85.
+    n_illustrative, p_illustrative = 74, 0.85
+    effect_illustrative = out["design"]["breakeven_pp_primary"]
     out["design"]["illustrative_power"] = {
         "n": n_illustrative,
         "assumed_probability": p_illustrative,
@@ -268,8 +273,8 @@ def main():
     print(f"  minimum detectable effect, primary    : {d['mde_pp_primary']:.2f} pp")
     print(f"  minimum detectable effect, tail       : {d['mde_pp_tail']:.2f} pp")
     ip = d["illustrative_power"]
-    print(f"  power, n={ip['n']} at p={ip['assumed_probability']}, vs "
-          f"{ip['effect_pp']} pp : {ip['power_pct']:.1f}%")
+    print(f"  power, n={ip['n']} at p={ip['assumed_probability']}, vs the "
+          f"{ip['effect_pp']:.2f} pp break-even : {ip['power_pct']:.1f}%")
     print()
     print("PRIMARY TEST  (favorites with vig-free probability above .70)")
     print(f"  n                 : {pr['n']} ({pr['share_of_sample_pct']:.1f}% of sample)")
