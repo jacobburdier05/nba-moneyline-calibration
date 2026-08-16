@@ -89,6 +89,7 @@ src/
   normalization_robustness.py  five vig-removal rules compared
   dependence_robustness.py   cluster-robust and block-bootstrap variance
   power_curve.py             Figure 3 and the full power table
+  shin_equivalence_proof.py  Appendix A, proof verified against the sample
   fetch_source_data.py       re-download upstream files and verify subsets
 results/                     machine-readable output, JSON and CSV
 figures/                     Figures 1, 2 and 3, PNG and PDF at 300 dpi
@@ -178,7 +179,9 @@ implied probabilities span .502 to .985.
 
 **Vig-removal robustness.** The primary test re-run under five normalizations.
 Four of five leave the gap below that rule's own break-even requirement; power
-normalization does not, and it is reported rather than dropped.
+normalization does not. The existence, size and sign of estimated favorite bias
+in this market all move with the normalization choice, which is the paper's
+more durable finding.
 
 | Rule | n | Gap (pp) | p | Break-even (pp) | Verdict |
 |---|---|---|---|---|---|
@@ -189,8 +192,11 @@ normalization does not, and it is reported rather than dropped.
 | Constant odds ratio | 7,202 | -0.74 | .104 | 1.79 | below |
 | Power | 7,211 | -1.31 | .004 | 1.24 | **exceeds** |
 
-For a two-outcome book Shin's rule coincides exactly with the additive rule;
-verified symbolically to 40 digits and numerically across the whole sample.
+For a two-outcome book Shin's rule coincides exactly with the additive rule.
+Proved in `src/shin_equivalence_proof.py`, which derives the result and checks
+every step against the sample to machine precision (max error 3.3e-16). The
+recovered insider share z runs 0.4% to 7.2%, so these are genuine Shin
+solutions, not a degenerate case.
 
 **Dependence robustness.** The gap is +0.58 pp under every variance estimator;
 only the standard error moves, from 0.39 to 0.53 pp against the

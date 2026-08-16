@@ -8,33 +8,37 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 echo
-echo "STEP 1 of 7  verify the data layer"
+echo "STEP 1 of 8  verify the data layer"
 python src/verify_data.py
 
 echo
-echo "STEP 2 of 7  build the analysis dataset"
+echo "STEP 2 of 8  build the analysis dataset"
 python src/build_dataset.py
 
 echo
-echo "STEP 3 of 7  confirmatory analyses"
+echo "STEP 3 of 8  confirmatory analyses"
 python src/primary_analysis.py
 
 echo
-echo "STEP 4 of 7  robustness analyses"
+echo "STEP 4 of 8  robustness analyses"
 python src/robustness.py
 
 echo
-echo "STEP 5 of 7  figures"
+echo "STEP 5 of 8  figures"
 python src/figures.py
 
 echo
-echo "STEP 6 of 7  robustness: vig-removal rules and dependence structures"
+echo "STEP 6 of 8  robustness: vig-removal rules and dependence structures"
 python src/normalization_robustness.py
 python src/dependence_robustness.py
 
 echo
-echo "STEP 7 of 7  power curve"
+echo "STEP 7 of 8  power curve"
 python src/power_curve.py
+
+echo
+echo "STEP 8 of 8  Appendix A: verify the Shin equivalence proof"
+python src/shin_equivalence_proof.py
 
 echo
 echo "Done. Results in results/, figures in figures/."
