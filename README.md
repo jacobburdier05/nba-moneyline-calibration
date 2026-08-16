@@ -73,8 +73,12 @@ src/
   primary_analysis.py        the confirmatory test and secondaries
   robustness.py              seasons, tail, bootstrap
   figures.py                 Figures 1 and 2
+  normalization_robustness.py  five vig-removal rules compared
+  dependence_robustness.py   cluster-robust and block-bootstrap variance
+  power_curve.py             Figure 3 and the full power table
+  fetch_source_data.py       re-download upstream files and verify subsets
 results/                     machine-readable output, JSON and CSV
-figures/                     Figures 1 and 2, PNG and PDF at 300 dpi
+figures/                     Figures 1, 2 and 3, PNG and PDF at 300 dpi
 docs/
   pre_specification.md       what the pre-specification claim rests on
   errata.md                  corrections between paper and code
@@ -156,7 +160,33 @@ implied probabilities span .502 to .985.
 | (.75, .80] | 1,661 | 79.11% | 77.38% | +1.73 | 1.69 | .091 | .457 |
 | (.80, 1.00] | 3,246 | 86.32% | 86.41% | -0.09 | -0.15 | .880 | .970 |
 
-**Robustness:** season gaps range -2.82 to +2.52 pp, none rejecting
+**Vig-removal robustness.** The primary test re-run under five normalizations.
+Four of five leave the gap below that rule's own break-even requirement; power
+normalization does not, and it is reported rather than dropped.
+
+| Rule | n | Gap (pp) | p | Break-even (pp) | Verdict |
+|---|---|---|---|---|---|
+| None, raw probabilities | 8,014 | -2.50 | <.001 | — | artifact |
+| Proportional (primary) | 6,840 | +0.58 | .223 | 3.01 | below |
+| Additive, equal margin | 7,120 | -0.60 | .186 | 1.88 | below |
+| Shin (1993) | 7,120 | -0.60 | .186 | 1.88 | below |
+| Constant odds ratio | 7,202 | -0.74 | .104 | 1.79 | below |
+| Power | 7,211 | -1.31 | .004 | 1.24 | **exceeds** |
+
+For a two-outcome book Shin's rule coincides exactly with the additive rule;
+verified symbolically to 40 digits and numerically across the whole sample.
+
+**Dependence robustness.** The gap is +0.58 pp under every variance estimator;
+only the standard error moves, from 0.39 to 0.53 pp against the
+Poisson-binomial 0.47. None of the six rejects calibration. The secondary
+calibration regression is less stable: joint Wald p is .293 classical, .085
+clustered on season, .037 two-way on season and team, the last on only 13
+clusters where cluster-robust variance is unreliable.
+
+**Power.** 80% at 1.33 pp, 95% at 1.7 pp, effectively certain at 3 pp and
+above. See `figures/figure3_power.png`.
+
+**Seasons:** season gaps range -2.82 to +2.52 pp, none rejecting
 (smallest p = .107). Cochran Q = 8.37 on 12 df, p = .756, I-squared 0
 percent. The tail above .90 (756 games) shows +0.63 pp, p = .506.
 
