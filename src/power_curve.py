@@ -94,9 +94,9 @@ def main():
     # curve and automatic placement overlaps them
     marks = [
         (mde, f"MDE {mde:.2f}", ACCENT, (-7, -6), "right", "top"),
-        (1.7, "1.7 smallest claimed", MUTED, (9, 2), "left", "center"),
+        (1.7, "1.7, smallest in cited work", MUTED, (8, -26), "left", "top"),
         (breakeven, f"break-even {breakeven:.2f}", FLAG, (0, -13), "center", "top"),
-        (5.1, "5.1 largest claimed", MUTED, (0, -13), "center", "top"),
+        (5.1, "5.1, largest in cited work", MUTED, (0, -13), "center", "top"),
     ]
 
     table = {
@@ -134,7 +134,10 @@ def main():
         y = power_at(x, se) * 100.0
         ax.plot([x], [y], "o", color=colour, markersize=4.5,
                 markeredgecolor="white", markeredgewidth=0.6, zorder=4)
-        ax.annotate(f"{label}\n{y:.0f}%", xy=(x, y), xytext=offset,
+        # power approaches but never equals 1, so anything that rounds to
+        # 100 is labeled as a bound rather than as an exact value
+        shown = ">99.9%" if y > 99.9 else f"{y:.0f}%"
+        ax.annotate(f"{label}\n{shown}", xy=(x, y), xytext=offset,
                     textcoords="offset points", fontsize=7, color=colour,
                     va=va, ha=ha)
 
