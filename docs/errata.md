@@ -289,3 +289,84 @@ from the inverse-variance-weighted mean, with w the inverse of the
 Poisson-binomial null variance, referred to chi-squared on k-1 degrees of
 freedom. No change to the statistic; the corrected value remains Q = 8.37,
 p = .756, I-squared 0 percent, as recorded in item 3 above.
+
+---
+
+# Addendum 2: an unsourced claim, removed (August 2026)
+
+## 11. The "1.7 to 5.1 percentage point" literature range had no source
+
+Earlier drafts stated that favorite bias "in the range commonly claimed,
+roughly 1.7 to 5.1 percentage points" had been reported in prior work, and
+Figure 3 marked both values as the smallest and largest effects in the
+cited literature. A reviewer asked where the numbers came from. They came
+from nowhere. Both were hard-coded constants with no citation behind them.
+
+Tracing them turned up a substantive problem rather than a clerical one:
+
+- Six of the eight cited papers report **rates of return** or
+  **point-spread cover rates**, not win-probability calibration gaps. The
+  two quantities are not interchangeable without attaching the odds. At
+  this sample's prices a -5.5 percent return corresponds to roughly -1.6
+  points of calibration gap and a -23 percent return to roughly -16, so
+  the classic literature, honestly converted, spans a far wider range than
+  1.7 to 5.1 and points the other way, because it concerns parimutuel
+  horse racing rather than a two-outcome book.
+- Newall and Cortis (2021), the one literature review in the citation set
+  and the obvious place such a range would live, is entirely directional
+  and reports no effect magnitudes at all.
+- The moneyline branch rests largely on Woodland and Woodland (2001),
+  whose conversion method was questioned by Berkowitz, Depken and Gandar
+  (2018), and whose authors reported in 2011 that the effect disappears in
+  later seasons.
+- A coincidence worth noting: 1.7 is numerically almost identical to this
+  paper's own largest bucket deviation, +1.73 points in the .75 to .80
+  bucket.
+
+**Fix.** The marks were removed rather than re-sourced, because no
+defensible replacement exists in those units. Figure 3 now marks only
+quantities computed from this sample: the observed +0.58-point gap, the
+1.33-point minimum detectable effect, and the 3.01-point break-even
+requirement. The Introduction's illustrative power calculation was
+re-anchored the same way: a 74-game bucket has about 11 percent power
+against this sample's own 3.01-point break-even margin, replacing the
+7 percent figure that had been computed against the unsourced 1.7. The
+Discussion now argues from power at the break-even threshold, which is
+stronger than the claim it replaced and needs no citation. Section 6 of
+the manuscript explains the removal in the open.
+
+## 12. The MDE is a normal approximation, and it was checked
+
+The 1.33-point minimum detectable effect is the conventional two-sided
+normal-approximation formula, not an exact inversion of the
+Poisson-binomial power function. That distinction was not stated.
+
+`src/power_curve.py` now computes the exact version: it builds the exact
+Poisson-binomial distribution by discrete Fourier transform of the
+characteristic function, finds the exact two-sided rejection region under
+the null, and inverts exact power at 80 percent.
+
+| Quantity | Value |
+|---|---|
+| Exact rejection region | wins <= 5,425 or >= 5,554 |
+| Exact size (discreteness, not .05) | .0484 |
+| MDE, normal approximation | 1.3281 pp |
+| MDE, exact Poisson-binomial | 1.3242 pp |
+| Difference | 0.0039 pp |
+
+The approximation is retained in the text because it is the conventional
+quantity, and both are now reported in Table 1. The exact mean and
+standard deviation of the null distribution also match the analytic
+sum(p) and sqrt(sum p(1-p)) to four decimal places, which is an
+independent check on the primary test's variance.
+
+## 13. Wording made less absolute
+
+Four phrases overstated what the paper establishes and were changed:
+
+| Was | Now |
+|---|---|
+| "on verified data" | "on cross-validated archival data" (the 260-game audit was hand-drawn, not probabilistic) |
+| "manufacturing most of the gap" | "concentrating much of the estimated gap" (removes a causal claim not established) |
+| "a curve-fitting device" | "a flexible transformation without the same direct behavioral or structural interpretation" (methodological rather than pejorative) |
+| "adequately powered" | "adequately powered for its pre-specified primary estimand" (power is specification-specific; the power-normalization run has its own MDE and threshold) |
