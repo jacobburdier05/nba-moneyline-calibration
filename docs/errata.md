@@ -370,3 +370,43 @@ Four phrases overstated what the paper establishes and were changed:
 | "manufacturing most of the gap" | "concentrating much of the estimated gap" (removes a causal claim not established) |
 | "a curve-fitting device" | "a flexible transformation without the same direct behavioral or structural interpretation" (methodological rather than pejorative) |
 | "adequately powered" | "adequately powered for its pre-specified primary estimand" (power is specification-specific; the power-normalization run has its own MDE and threshold) |
+
+## 14. Plain-language revision of the prose
+
+The manuscript was rewritten in plainer English at the author's request.
+No finding, statistic, table value, figure, citation or claim changed. A
+script compared every numeric token and every parenthetical citation in
+the old and new build sources and found both sets identical.
+
+What changed is word choice. Elevated non-technical diction was replaced
+with ordinary words: *conflate* became *mix up*, *impounded* became
+*absorb*, *estimand* became *the quantity being estimated*, *materially*
+became *heavily*, *durable* became *lasting*, *monetize* became *turn
+into profit*, *propagate* became *carry over*, *asymptotics* became
+*approximations that fail when clusters are few*, *admissible* became
+*possible*, *persuasive* became *convincing*, *legitimate* became *fair*,
+*cosmetic* became *matters*, and *collinear* became *mirror images of
+each other*. Five long sentences were split.
+
+Technical vocabulary was deliberately left alone. Poisson-binomial,
+calibration gap, overround, vig-free, booksum, minimum detectable effect,
+cluster-robust variance, Cochran Q, Holm correction, Wilson interval and
+the rest are the field's terms of art; replacing them would cost
+precision rather than gain clarity.
+
+Measured on the body prose, the Flesch-Kincaid grade level fell from 13.8
+to 12.9, Flesch reading ease rose from 36.2 to 41.8, and the share of
+words with three or more syllables fell from 19.1 to 16.8 percent. Length
+is unchanged at 15 pages plus a 6-page supplement.
+
+**One consequence for item 13 above.** Three of the four replacement
+phrasings recorded in that table were themselves reworded in this pass
+and no longer appear verbatim in the manuscript. The substance of each
+correction stands; only the wording moved.
+
+| Item 13 recorded | Now reads |
+|---|---|
+| "on cross-validated archival data" | "run on cross-checked archival data" |
+| "concentrating much of the estimated gap" | "placing much of the estimated gap" |
+| "a flexible transformation without the same direct behavioral or structural interpretation" | "a flexible adjustment with no story about bookmakers or bettors behind it" |
+| "adequately powered for its pre-specified primary estimand" | "powered well enough for the comparison it was built to make" |
