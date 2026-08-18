@@ -1,0 +1,182 @@
+{
+  "seed": 20260818,
+  "reps_interval": 100000,
+  "reps_size": 40000,
+  "full_sample": [
+    {
+      "group": "All favorites",
+      "n": 15351,
+      "return_pct": -4.064540435816774,
+      "ci_normal_pct": [
+        -5.126779380918008,
+        -3.00230149071554
+      ],
+      "ci_simulated_pct": [
+        -5.124749327093523,
+        -2.9961292645056705
+      ],
+      "max_bound_shift_pp": 0.006172226209869347,
+      "per_bet_skew": -0.5522843850160117,
+      "ttest_true_size": 0.0498,
+      "nominal_size": 0.05
+    },
+    {
+      "group": "All underdogs",
+      "n": 15351,
+      "return_pct": -3.9083410043988325,
+      "ci_normal_pct": [
+        -6.565233174135463,
+        -1.2514488346622028
+      ],
+      "ci_simulated_pct": [
+        -6.655222567192026,
+        -1.211419141748754
+      ],
+      "max_bound_shift_pp": 0.0899893930565634,
+      "per_bet_skew": 2.5110301267256014,
+      "ttest_true_size": 0.049,
+      "nominal_size": 0.05
+    },
+    {
+      "group": "Favorites above .70",
+      "n": 6840,
+      "return_pct": -2.89607047637783,
+      "ci_normal_pct": [
+        -4.037378667083318,
+        -1.7547622856723413
+      ],
+      "ci_simulated_pct": [
+        -4.0429598171763645,
+        -1.7287313422182624
+      ],
+      "max_bound_shift_pp": 0.02603094345407886,
+      "per_bet_skew": -1.4319789231590818,
+      "ttest_true_size": 0.0488,
+      "nominal_size": 0.05
+    }
+  ],
+  "by_sample_size": [
+    {
+      "group": "All favorites",
+      "n": 100,
+      "per_bet_sd_pct": 66.372981843695,
+      "skew_of_mean": -0.033196640563807514,
+      "ttest_true_size": 0.054325,
+      "simulated_size": 0.05
+    },
+    {
+      "group": "All favorites",
+      "n": 250,
+      "per_bet_sd_pct": 65.98014468454001,
+      "skew_of_mean": -0.044684359053746486,
+      "ttest_true_size": 0.0545,
+      "simulated_size": 0.05
+    },
+    {
+      "group": "All favorites",
+      "n": 500,
+      "per_bet_sd_pct": 67.29312286697628,
+      "skew_of_mean": 0.012087215810370453,
+      "ttest_true_size": 0.0503,
+      "simulated_size": 0.05
+    },
+    {
+      "group": "All favorites",
+      "n": 1000,
+      "per_bet_sd_pct": 67.6394423261858,
+      "skew_of_mean": -0.00561052308143368,
+      "ttest_true_size": 0.050475,
+      "simulated_size": 0.05
+    },
+    {
+      "group": "All favorites",
+      "n": 5000,
+      "per_bet_sd_pct": 67.28677325831495,
+      "skew_of_mean": -0.028901395216783785,
+      "ttest_true_size": 0.0512,
+      "simulated_size": 0.05
+    },
+    {
+      "group": "All underdogs",
+      "n": 100,
+      "per_bet_sd_pct": 178.39660940919322,
+      "skew_of_mean": 0.2817926132956001,
+      "ttest_true_size": 0.065425,
+      "simulated_size": 0.05
+    },
+    {
+      "group": "All underdogs",
+      "n": 250,
+      "per_bet_sd_pct": 169.3087522380825,
+      "skew_of_mean": 0.16491732801689982,
+      "ttest_true_size": 0.056575,
+      "simulated_size": 0.05
+    },
+    {
+      "group": "All underdogs",
+      "n": 500,
+      "per_bet_sd_pct": 175.7865363576612,
+      "skew_of_mean": 0.15567858151780783,
+      "ttest_true_size": 0.054675,
+      "simulated_size": 0.05
+    },
+    {
+      "group": "All underdogs",
+      "n": 1000,
+      "per_bet_sd_pct": 171.0663742124968,
+      "skew_of_mean": 0.08010220070849947,
+      "ttest_true_size": 0.051725,
+      "simulated_size": 0.05
+    },
+    {
+      "group": "All underdogs",
+      "n": 5000,
+      "per_bet_sd_pct": 171.64104800083703,
+      "skew_of_mean": 0.0547909427602395,
+      "ttest_true_size": 0.050075,
+      "simulated_size": 0.05
+    },
+    {
+      "group": "Favorites above .70",
+      "n": 100,
+      "per_bet_sd_pct": 46.671808078719984,
+      "skew_of_mean": -0.17051363185328264,
+      "ttest_true_size": 0.057375,
+      "simulated_size": 0.05
+    },
+    {
+      "group": "Favorites above .70",
+      "n": 250,
+      "per_bet_sd_pct": 49.16103125425505,
+      "skew_of_mean": -0.09367906302041207,
+      "ttest_true_size": 0.0546,
+      "simulated_size": 0.05
+    },
+    {
+      "group": "Favorites above .70",
+      "n": 500,
+      "per_bet_sd_pct": 48.83910713632288,
+      "skew_of_mean": -0.04418791216399474,
+      "ttest_true_size": 0.052775,
+      "simulated_size": 0.05
+    },
+    {
+      "group": "Favorites above .70",
+      "n": 1000,
+      "per_bet_sd_pct": 48.53337211809052,
+      "skew_of_mean": -0.05062605849410095,
+      "ttest_true_size": 0.051925,
+      "simulated_size": 0.05
+    },
+    {
+      "group": "Favorites above .70",
+      "n": 5000,
+      "per_bet_sd_pct": 48.676747868617184,
+      "skew_of_mean": -0.055722154203452154,
+      "ttest_true_size": 0.0487,
+      "simulated_size": 0.05
+    }
+  ],
+  "max_interval_shift_pp_full_sample": 0.0899893930565634,
+  "conclusion": "At this paper's sample sizes the normal and simulated intervals agree to 0.09 pp and the t-test holds its nominal size, so the reported return intervals stand. The failure they describe is reproduced in these same prices at the sample sizes the literature typically uses."
+}
