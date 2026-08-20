@@ -1,0 +1,91 @@
+{
+  "breakeven": {
+    "equal_weighted_mean_pp": 3.0126424715917475,
+    "exact_uniform_shift_pp": 2.994135872628836,
+    "shortcut_error_pp": 0.018506598962911625,
+    "if_all_gap_in_shortest_decile_pp": 34.72238224549351,
+    "if_all_gap_in_longest_decile_pp": 26.584419970752233,
+    "note": "Expected return on a unit stake is p/r - 1, so the portfolio breaks even on a 1/r-weighted gap. The paper quotes the equal-weighted mean."
+  },
+  "equivalence": {
+    "margin_pp": 2.994135872628836,
+    "observed_gap_pp": 0.5782397469359948,
+    "favorite_wins": 5529,
+    "p_upper_exact": 4.745112931208725e-08,
+    "p_lower_exact": 2.3849323789998507e-13,
+    "tost_p_exact": 4.745112931208725e-08,
+    "equivalence_established_at_05": true,
+    "ci95_pp": [
+      -0.3509248771595035,
+      1.507404371031493
+    ],
+    "ci90_pp": [
+      -0.20159484828701268,
+      1.3580743421590022
+    ],
+    "team_bootstrap_ci95_upper_pp": 1.57,
+    "interpretation": "Rejecting both one-sided nulls means the gap is smaller in absolute value than the break-even margin, at the stated level. This is the hypothesis the paper's conclusion actually relies on."
+  },
+  "fixed_sample_normalization": [
+    {
+      "n": 6840,
+      "gap_pp": -2.4344027246557536,
+      "se_pp": 0.4431266141695546,
+      "z": -5.493695586797394,
+      "p_value": 3.936087332923311e-08,
+      "rule": "None, raw probabilities",
+      "breakeven_pp": null,
+      "exceeds_breakeven": null
+    },
+    {
+      "n": 6840,
+      "gap_pp": 0.5782397469359907,
+      "se_pp": 0.47406358372219287,
+      "z": 1.2197514569582428,
+      "p_value": 0.2225591084469568,
+      "rule": "Proportional (primary)",
+      "breakeven_pp": 3.0126424715917435,
+      "exceeds_breakeven": false
+    },
+    {
+      "n": 6840,
+      "gap_pp": -0.5537886265514558,
+      "se_pp": 0.462688680134786,
+      "z": -1.19689253342038,
+      "p_value": 0.2313484448012526,
+      "rule": "Additive, equal margin",
+      "breakeven_pp": 1.8806140981042971,
+      "exceeds_breakeven": false
+    },
+    {
+      "n": 6840,
+      "gap_pp": -0.5537886265514557,
+      "se_pp": 0.462688680134786,
+      "z": -1.1968925334203797,
+      "p_value": 0.2313484448012525,
+      "rule": "Shin (1993)",
+      "breakeven_pp": 1.8806140981042971,
+      "exceeds_breakeven": false
+    },
+    {
+      "n": 6840,
+      "gap_pp": -0.6529514075330849,
+      "se_pp": 0.4615582929227181,
+      "z": -1.4146672642331075,
+      "p_value": 0.1571660767831707,
+      "rule": "Constant odds ratio",
+      "breakeven_pp": 1.7814513171226682,
+      "exceeds_breakeven": false
+    },
+    {
+      "n": 6840,
+      "gap_pp": -1.214878528307285,
+      "se_pp": 0.45556302387352715,
+      "z": -2.6667628069932166,
+      "p_value": 0.007658570188410586,
+      "rule": "Power",
+      "breakeven_pp": 1.2195241963484684,
+      "exceeds_breakeven": false
+    }
+  ]
+}
