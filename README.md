@@ -61,7 +61,7 @@ pip install -r requirements.txt
 bash run_all.sh
 ```
 
-Runtime is about five minutes on a laptop. `run_all.sh` runs verification,
+Runtime is about six minutes on a laptop. `run_all.sh` runs verification,
 builds the dataset, runs the confirmatory analyses, runs the robustness
 checks, regenerates all three figures, and verifies the Appendix A proof. Every number in the paper is printed
 to the console and written to `results/`.
@@ -95,6 +95,7 @@ src/
   power_curve.py             Figure 3 and the full power table
   shin_equivalence_proof.py  Appendix A, proof verified against the sample
   return_simulation.py       simulated null for the flat-stake return intervals
+  equivalence_and_fixed_sample.py  equivalence test, fixed-sample vig rules
   fetch_source_data.py       re-download upstream files and verify subsets
 results/                     machine-readable output, JSON and CSV
 figures/                     Figures 1, 2 and 3, PNG and PDF at 300 dpi
