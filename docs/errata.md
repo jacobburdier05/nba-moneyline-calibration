@@ -440,3 +440,103 @@ As with item 14, a script compared every numeric token and every
 parenthetical citation across the old and new build sources and found both
 sets identical. Sentences that are lists of numbers were left alone;
 breaking them up would have hurt rather than helped.
+
+## 16. Three claims revised after external review
+
+A reviewer raised six issues. Three were about wording and were fixed
+directly. Three required new computation, and two of those changed a
+claim. `src/equivalence_and_fixed_sample.py` produces all of it.
+
+### 16a. Table 5 compared different rules on different samples
+
+Each vig-removal rule produces its own probabilities, so each rule also
+selects its own set of games above the .70 threshold: 6,840 under
+proportional, 7,120 under additive and Shin, 7,202 under constant odds
+ratio, 7,211 under power. Differences across the rows of Table 5
+therefore mixed the rule's effect with a change in sample composition.
+
+Holding the sample fixed at the 6,840 games the pre-specified rule
+selects, and changing only the rule:
+
+| Rule | Gap (pp) | p | Break-even (pp) | Verdict |
+|---|---|---|---|---|
+| None, raw | -2.43 | <.001 | — | margin artifact |
+| Proportional | +0.58 | .223 | 3.01 | below |
+| Additive | -0.55 | .231 | 1.88 | below |
+| Shin (1993) | -0.55 | .231 | 1.88 | below |
+| Constant odds ratio | -0.65 | .157 | 1.78 | below |
+| Power | -1.21 | .008 | 1.22 | below |
+
+**This changes a claim.** The paper previously said power normalization
+"marginally exceeds its own break-even threshold ... clearing the bar by
+seven hundredths of a point." On a like-for-like sample it falls short by
+one hundredth instead. The two numbers are indistinguishable, and which
+side of the line the estimate lands on depends partly on which games the
+rule admits.
+
+What survives: the sign and the significance of estimated favorite bias
+move with the vig-removal rule. What is withdrawn: the narrower claim that
+some rule in this set produced a gap a bettor could have used.
+
+### 16b. The minimum detectable effect was used as if it ruled effects out
+
+The paper argued that the observed gap "sits well inside the region the
+test was built to rule out." An 80 percent MDE is not a confidence bound
+and not an equivalence test. A design with an MDE of 1.33 points has not
+ruled out every effect below 1.33.
+
+The primary test asks whether the gap is zero. Most of the conclusion is
+about whether the gap is smaller than an amount a bettor could use. Those
+are different hypotheses, so the second one is now tested directly: two
+one-sided tests against the break-even margin, evaluated exactly on the
+Poisson-binomial.
+
+| Quantity | Value |
+|---|---|
+| Equivalence margin | +/- 2.99 pp |
+| p, true gap is below +2.99 | 4.7e-08 |
+| p, true gap is above -2.99 | 2.4e-13 |
+| TOST p | 4.7e-08 |
+| 95 percent interval on the gap | -0.35 to +1.51 pp |
+
+The MDE language is gone from the abstract, results and discussion. The
+interval and the equivalence test carry the claim instead.
+
+A bug surfaced while building this and is worth recording. The upper tail
+was first computed as `1 - cdf[k-1]`, which loses all precision when the
+cdf is within rounding distance of one; it returned -2.5e-13. Both tails
+are now summed directly from the pmf.
+
+### 16c. The break-even margin was an average, not a derivation
+
+Expected return on a one-unit stake on favorite i is p_i / r_i - 1, where
+r_i is the raw implied probability. The portfolio therefore breaks even on
+a gap weighted by 1 / r_i, not on an equally weighted gap. Solving for the
+exact uniform shift gives 2.9941 pp against the 3.0126 the paper quoted,
+a difference of 0.0185 pp. The shortcut was fine at these prices and the
+derived value is now used wherever the number carries a test.
+
+If the whole portfolio-level bias sat in a single decile of prices rather
+than spreading evenly, that decile would need a gap of 26.6 points at the
+longest prices or 34.7 at the shortest. Nothing that large is anywhere in
+this sample.
+
+### 16d. Wording, and a numbering error
+
+- The conclusion said the moneylines were "calibrated," full stop, which
+  is too categorical given the paper's own Table 5. It now reads that the
+  evidence for favorite miscalibration is not robust to the choice of
+  vig-removal model.
+- "The most credible dependence check" became "a particularly informative"
+  one, since the choice of clustering structure is itself an assumption.
+- "the false signal created by the bookmaker's margin" became "apparent
+  deviations that arise from the treatment of the bookmaker's margin," and
+  "single-rule bucket tests this literature has relied on" became "common
+  in prior work." Same claims, less prosecutorial.
+- The abstract now states the logistic calibration regression's
+  sensitivity under small-cluster dependence rather than leaving it to
+  section 5.3.
+- The title changed to foreground the vig-removal finding.
+- Supplement sections ran S1, S2, S3, S6, S4, S5 after the return-interval
+  section was inserted in the wrong place. They now run S1 through S7 in
+  document order, with tables S1 through S9.
