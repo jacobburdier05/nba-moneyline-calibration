@@ -410,3 +410,33 @@ correction stands; only the wording moved.
 | "concentrating much of the estimated gap" | "placing much of the estimated gap" |
 | "a flexible transformation without the same direct behavioral or structural interpretation" | "a flexible adjustment with no story about bookmakers or bettors behind it" |
 | "adequately powered for its pre-specified primary estimand" | "powered well enough for the comparison it was built to make" |
+
+## 15. Second plain-language pass: sentence structure
+
+Item 14 replaced elevated words with ordinary ones and moved the
+Flesch-Kincaid grade from 13.8 to 12.9. That pass left sentence length
+untouched, at an average of 22 words with sixty sentences running past
+28. Long sentences were doing most of the remaining work against a reader.
+
+Forty-two sentences in the main paper and ten in the supplement were split
+into shorter ones. Nothing was deleted and nothing was added except the
+connective words a split requires. The word count moved from 3,926 to
+3,969.
+
+| Measure, main paper body prose | Original | After item 14 | Now |
+|---|---|---|---|
+| Average sentence length | 22.4 | 22.2 | 16.8 |
+| Words of three or more syllables | 19.1% | 16.8% | 16.9% |
+| Flesch-Kincaid grade | 13.8 | 13.0 | 10.8 |
+| Flesch reading ease | 36.2 | 41.7 | 47.3 |
+
+The supplement moved from grade 11.8 to 10.2, and reading ease from 50.9
+to 54.9.
+
+Line spacing was tightened from 340 to 326 twips so the main paper stays
+at 15 pages. The supplement is 7 pages.
+
+As with item 14, a script compared every numeric token and every
+parenthetical citation across the old and new build sources and found both
+sets identical. Sentences that are lists of numbers were left alone;
+breaking them up would have hurt rather than helped.
