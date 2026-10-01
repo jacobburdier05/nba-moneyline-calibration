@@ -540,3 +540,69 @@ this sample.
 - Supplement sections ran S1, S2, S3, S6, S4, S5 after the return-interval
   section was inserted in the wrong place. They now run S1 through S7 in
   document order, with tables S1 through S9.
+
+---
+
+# Addendum 3: September and October 2026
+
+## 17. The Shin result was already published
+
+The paper said Whelan (2025) gives the closed form for Shin's insider
+share in a two-outcome book, and that what follows from it "has not been
+stated." That was wrong. Clarke, Kovalchik and Ingram (2017) proved that
+the Shin and additive methods are equivalent for races with two
+competitors. It's in their abstract and their appendix.
+
+> Clarke, S., Kovalchik, S., & Ingram, M. (2017). Adjusting bookmaker's
+> odds to allow for overround. *American Journal of Sports Science*,
+> 5(6), 45-49. https://doi.org/10.11648/j.ajss.20170506.12
+
+The `implied` R package documentation says the same thing in one line.
+
+What changed:
+
+- Section 4.1 cites Clarke et al. where it says Shin reduces to the
+  additive rule.
+- Section 5.4 credits the equivalence to Clarke et al., keeps Whelan for
+  the closed form of the insider share, and drops the "not stated" claim.
+- Supplement S1 no longer calls the result unusual. The derivation stays
+  as a check, not as a new result.
+- Slide 17's footnote now cites both papers.
+
+Item 7 above should be read the same way. The proof and the
+machine-precision check in `src/shin_equivalence_proof.py` are a
+verification of a known result. No number changed.
+
+## 18. Whelan (2025) added
+
+Whelan, K. (2025). On estimates of insider trading in sports betting.
+*The Manchester School*, 93(3), 217-229.
+https://doi.org/10.1111/manc.12505
+
+Cited in Section 5.4 for the closed form of Shin's insider share z when
+there are two outcomes.
+
+## 19. Third plain-language pass
+
+The prose was revised again to match the author's own writing: first
+person, shorter sentences, "percent" spelled out. Measured
+on the body text with the same counter, average sentence length went from
+18 to 16 words, and sentences over 25 words went from about one in five
+to one in ten. No statistic, table value or figure changed. Two small
+things moved: Section 5.4 now gives the raw-price gap on both samples
+(-2.50 on its own sample, -2.43 on the fixed one), and the Figure 3
+caption no longer repeats the history in item 11. Citations changed only
+as items 17 and 18 describe.
+
+## 20. The replication-materials reference used the old title
+
+The reference list still called the repository "Replication materials for
+'Are archived NBA consensus moneylines calibrated?'" after the paper was
+retitled in item 16d. It now uses the current title.
+
+## 21. One return interval was rounded the wrong way
+
+Section 5.5 gave the flat-stake return on favorites above .70 as -2.90
+percent with a 95 percent interval of -4.04 to -1.76. The code computes
+the upper bound as -1.7548, which rounds to -1.75. The paper now says
+-1.75, matching `results/primary_results.json` and the README.
