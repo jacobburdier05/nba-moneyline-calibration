@@ -1,56 +1,47 @@
-# Are NBA Consensus Moneylines Calibrated?
+# Vig Removal Changes the Answer
 
-**A pre-specified test for favorite bias in 15,351 games**
+**A pre-specified calibration test of 15,351 archived NBA moneylines**
 
-Jacob Burdier · The Scholars' Academy · 2026
+Jacob Burdier · The Scholars' Academy, Queens, NY · ORCID [0009-0004-9468-6513](https://orcid.org/0009-0004-9468-6513)
 
-Replication materials for a pre-specified, power-justified calibration test
-of NBA consensus moneylines, 2007-08 through 2019-20.
+| Read it | |
+|---|---|
+| Paper, 15 pages | [PDF](paper/NBA_Moneyline_Calibration_Paper.pdf) · [Word](paper/NBA_Moneyline_Calibration_Paper.docx) |
+| Supplement, 9 pages | [PDF](paper/NBA_Moneyline_Calibration_Supplement.pdf) · [Word](paper/NBA_Moneyline_Calibration_Supplement.docx) |
+| Slides, 22 | [PDF](paper/NBA_Moneyline_Calibration_Slides.pdf) · [PowerPoint](paper/NBA_Moneyline_Calibration_Slides.pptx) |
+| Conference abstract, 2 pages | [PDF](paper/NBA_Moneyline_Calibration_Abstract.pdf) |
+| Every correction I've made | [docs/errata.md](docs/errata.md) |
 
 ---
 
-## Finding
+## The short version
 
-Favorites priced above .70 vig-free implied probability won **80.83 percent**
-of the time against an implied **80.26 percent**. The gap is **+0.58
-percentage points** (z = 1.22, p = .223). A logistic calibration regression
-cannot reject perfect calibration (slope 1.049, joint Wald p = .293). No
-pre-specified odds bucket deviates after Holm correction and no single
-season deviates.
+Almost every test of betting-market bias starts with the same step: taking
+the sportsbook's cut out of the price. There isn't one correct way to do
+that, and most papers pick a method in one sentence and move on. I wanted
+to know how much the answer depends on that sentence.
 
-The economic reading is the sharper one. At quoted prices a favorite bettor
-needed favorites to beat their vig-free probability by **3.01 percentage
-points** to break even. The entire confidence interval for the observed gap
-sits below half of that.
+I tested one question, fixed before I looked at any outcomes: do NBA
+favorites with a vig-free win probability above .70 win as often as their
+prices say?
 
-**In this sample, the aggregate favorite calibration gap was too small to
-exploit** in every season and odds range examined, and the estimate holds
-under six variance estimators that allow correlation within seasons and
-within teams. One qualification: of five vig-removal rules, four leave the
-gap below its own break-even threshold and one does not. See the
-robustness section below, which reports it rather than burying it.
+Under the rule I picked in advance, the answer is close enough. Favorites
+above .70 (6,840 games) won **80.83 percent** of the time against an
+implied **80.26 percent**. That's a gap of **+0.58 percentage points**
+(z = 1.22, p = .223, 95 percent CI -0.35 to +1.51). A bettor needed 2.99
+points to break even, and an equivalence test rules out a gap that big
+(p = 4.7e-08).
 
-A methodological caution is quantified along the way: testing raw implied
-probabilities without removing the vig manufactures an apparent favorite
-bias of **2.5 percentage points** (z = -5.90) that is the bookmaker margin,
-not bettor behavior.
+Then I changed only the vig-removal rule, on the same games. The gap
+moves from **-1.21 to +0.58**. That's not a rounding issue, it's a sign
+flip. Power normalization makes the gap significant (p = .008), and
+skipping vig removal entirely shows a favorite bias of -2.43 points that's
+really just the sportsbook's cut.
 
-![Calibration by decile of implied probability](figures/figure1_calibration.png)
+So the real finding isn't the null. It's that the evidence for favorite
+bias depends on a step most papers never report.
 
-*Figure 1. Observed favorite win rates against vig-free implied probability, by decile, with 95% Wilson intervals, against the line of perfect calibration.*
-
-## Why the design matters more than the answer
-
-Underpowered bucket tests are the recurring problem in this literature. A
-74-game bucket of extreme favorites, the kind these studies routinely
-report, has about **11 percent power** to detect a deviation the size of
-this sample's own break-even margin, 3.01 percentage points. Both a significant result and a null result from a test like
-that are uninformative.
-
-This design fixes the analysis plan first, sets the smallest effect worth
-detecting at the margin a bettor must actually overcome, and reaches a
-minimum detectable effect of **1.33 percentage points** against a **3.01
-point** break-even bar. Whatever the outcome, the result is informative.
+![Same 6,840 games under every vig-removal rule](figures/abstract_fig1_rules.png)
 
 ## Reproduce it
 
@@ -61,236 +52,206 @@ pip install -r requirements.txt
 bash run_all.sh
 ```
 
-Runtime is about six minutes on a laptop. `run_all.sh` runs verification,
-builds the dataset, runs the confirmatory analyses, runs the robustness
-checks, regenerates all three figures, and verifies the Appendix A proof. Every number in the paper is printed
-to the console and written to `results/`.
+It takes about six minutes on a laptop. Step 1 checks the data and stops
+everything if a check fails. Every number in the paper prints to the
+console and gets written to `results/`. Every figure gets rebuilt in
+`figures/`.
 
-## The paper
-
-The manuscript is in [`paper/`](paper/), in Word and PDF, with a separate
-supplement carrying the technical material: the Shin derivation and its
-numerical verification, the exact Poisson-binomial power computation, the
-season-by-season table, the record of a withdrawn literature claim, and the
-step-by-step reproduction guide. Every statistic and figure in both is
-regenerated by `run_all.sh` from the raw archive.
-
-## What is in here
+## What's in here
 
 ```
+paper/
+  NBA_Moneyline_Calibration_Paper.pdf / .docx        the paper, 15 pages
+  NBA_Moneyline_Calibration_Supplement.pdf / .docx   the supplement, 9 pages
+  NBA_Moneyline_Calibration_Slides.pdf / .pptx       the slides, 22
+  NBA_Moneyline_Calibration_Abstract.pdf             the conference abstract
 data/
   raw/                       source files, unmodified
   processed/games.csv        analysis dataset, one row per game
 preregistration/
   analysis_plan.md           the frozen plan, transcribed
 src/
-  odds.py                    odds conversion and de-vigging
-  verify_data.py             data verification, run first
-  build_dataset.py           exclusions and probability construction
-  primary_analysis.py        the confirmatory test and secondaries
+  odds.py                    odds conversion and vig removal
+  verify_data.py             data checks, run first
+  build_dataset.py           exclusions and probabilities
+  primary_analysis.py        the main test and the secondary tests
   robustness.py              seasons, tail, bootstrap
-  figures.py                 Figures 1 and 2
+  figures.py                 paper Figures 1 and 2
   normalization_robustness.py  five vig-removal rules compared
-  dependence_robustness.py   cluster-robust and block-bootstrap variance
-  power_curve.py             Figure 3 and the full power table
-  shin_equivalence_proof.py  Appendix A, proof verified against the sample
-  return_simulation.py       simulated null for the flat-stake return intervals
-  equivalence_and_fixed_sample.py  equivalence test, fixed-sample vig rules
-  fetch_source_data.py       re-download upstream files and verify subsets
-results/                     machine-readable output, JSON and CSV
-figures/                     Figures 1, 2 and 3, PNG and PDF at 300 dpi
-paper/
-  NBA_Moneyline_Calibration_Paper.docx     manuscript
-  NBA_Moneyline_Calibration_Paper.pdf      manuscript, 15 pages
-  NBA_Moneyline_Calibration_Supplement.docx  supplementary material
-  NBA_Moneyline_Calibration_Supplement.pdf   supplementary material, 6 pages
+  dependence_robustness.py   clustered errors and block bootstraps
+  power_curve.py             paper Figure 3 and the power table
+  shin_equivalence_proof.py  supplement S1, checked against every game
+  return_simulation.py       simulated null for the return intervals
+  equivalence_and_fixed_sample.py  equivalence test, same-sample vig rules
+  abstract_figures.py        the two abstract figures
+  fetch_source_data.py       re-downloads the source files and checks them
+results/                     every number, as JSON and CSV
+figures/                     every figure, PNG and PDF at 300 dpi
 docs/
   pre_specification.md       what the pre-specification claim rests on
-  errata.md                  corrections between paper and code
+  errata.md                  every correction, in order
+run_all.sh                   runs all eleven steps
 ```
 
-## Verification
+## The data
 
-`src/verify_data.py` runs before anything else and must pass.
+Consensus moneylines and final scores come from the
+[Sportsbook Reviews Online archive](https://www.sportsbookreviewsonline.com/scoresoddsarchives/nba/nbaoddsarchives.htm)
+and reach this repo through the public data repository for Dotan (2020),
+[`guydotan/ucla-thesis`](https://github.com/guydotan/ucla-thesis).
 
-| Check | Result |
-|---|---|
-| Moneylines cross-validated against an independent extraction | **30,978 of 30,978 match** |
-| Outcomes cross-validated | **15,490 of 15,490 match** |
-| Season game counts vs the true NBA schedule | **13 of 13 seasons exact** |
-| Invalid outcome codes | 0 |
-| Missing moneylines in source | 1, excluded |
-
-The schedule check includes the three irregular seasons: the 990-game
-2011-12 lockout year, the 1,229-game 2012-13 season after one cancellation,
-and the 971 games played in 2019-20 before the March 2020 suspension.
-
-A separate manual audit of 260 games against the live sportsbookreviewsonline
-primary source is described in `docs/pre_specification.md`.
-
-## Data provenance
-
-Consensus moneylines and final scores originate from the
-[sportsbookreviewsonline.com archive](https://www.sportsbookreviewsonline.com/scoresoddsarchives/nba/nbaoddsarchives.htm)
-and reach this repository through the public data repository accompanying
-Dotan (2020), [`guydotan/ucla-thesis`](https://github.com/guydotan/ucla-thesis).
-
-The archive reports one moneyline per side per game. It does **not**
-document whether the line is an opening or closing quote, and it does not
-identify the originating sportsbook. This paper therefore calls them
-*consensus moneylines*. Convention treats archive lines of this kind as
-closing quotes; that claim is not verifiable from the source and is not
-made here.
-
-The source pipeline had already dropped playoff games, so the sample is
-regular season only.
-
-## Sample construction
+The archive gives one moneyline per side per game. It doesn't say whether
+that's an opening or closing line, and it doesn't name the sportsbook. So
+I call them consensus moneylines and don't claim they're closing lines.
+The source had already dropped playoff games, so this is regular season
+only. It ends in March 2020 because that's where the archive ends.
 
 | Step | Games |
 |---|---|
 | Source rows | 15,490 |
-| Less missing moneyline | -1 |
-| Less pick'em, neither side a favorite | -138 |
+| Missing moneyline | -1 |
+| Pick'em, no favorite | -138 |
 | **Analysis sample** | **15,351** |
 
-Mean overround on the analysis sample is 3.77 percent. Favorite vig-free
-implied probabilities span .502 to .985.
+Mean overround is 3.77 percent. Favorite vig-free probabilities run from
+.502 to .985.
 
-## Headline results
+### Checks that run before anything else
 
-**Primary test**, favorites above .70 vig-free implied probability:
+| Check | Result |
+|---|---|
+| Moneylines against a separate extraction of the same archive | **30,978 of 30,978 match** |
+| Outcomes against that extraction | **15,490 of 15,490 match** |
+| Games per season against the real NBA schedule | **13 of 13 seasons exact** |
+| Invalid outcome codes | 0 |
+| Missing moneylines | 1, excluded |
+
+The schedule check includes the 990-game 2011-12 lockout season, the
+1,229-game 2012-13 season after one cancellation, and the 971 games played
+in 2019-20 before the shutdown. A hand audit of 260 games against the live
+archive is described in `docs/pre_specification.md`.
+
+## Results
+
+### The main test
+
+Favorites above .70 vig-free probability, proportional vig removal, all
+fixed in advance.
 
 | | |
 |---|---|
-| n | 6,840 (44.6% of sample) |
-| Observed wins | 5,529 |
-| Expected wins | 5,489.45 |
-| Observed rate | 80.83% |
-| Implied rate | 80.26% |
-| Gap | +0.58 pp |
-| z | 1.22 |
-| p | .223 |
-| Season-blocked bootstrap 95% CI | -0.19 to +1.26 pp |
-| Minimum detectable effect | 1.33 pp |
-| Break-even requirement | 3.01 pp |
+| Games | 6,840 (44.6 percent of the sample) |
+| Wins, observed | 5,529 |
+| Wins, expected | 5,489.45 |
+| Win rate, observed | 80.83 percent |
+| Win rate, implied | 80.26 percent |
+| Gap | +0.58 points |
+| z, p | 1.22, .223 |
+| 95 percent CI | -0.35 to +1.51 points |
+| Break-even for a bettor | 2.99 points (exact), 3.01 (simple average) |
+| Equivalence test, TOST p | 4.7e-08 |
 
-**Buckets**, Holm corrected:
+### Same games, every vig-removal rule
 
-| Bucket | n | Observed | Implied | Gap (pp) | z | p | Holm p |
+All 6,840 games stay fixed. Only the rule changes.
+
+| Rule | Gap (points) | p | That rule's break-even |
+|---|---|---|---|
+| None, raw prices | -2.43 | <.001 | none |
+| Proportional (set in advance) | +0.58 | .223 | 3.01 |
+| Equal margin | -0.55 | .231 | 1.88 |
+| Shin (1993) | -0.55 | .231 | 1.88 |
+| Constant odds ratio | -0.65 | .157 | 1.78 |
+| Power | -1.21 | .008 | 1.22 |
+
+The sign flips and one rule turns significant. No rule produces a gap a
+bettor could have used: power comes closest, at -1.21 against its own
+1.22 break-even.
+
+If each rule is allowed to pick its own games above .70, the spread is a
+little wider (-1.31 to +0.58, Table 5 in the paper). That version mixes
+two changes at once, which is why the same-sample table above is the one
+to read. `docs/errata.md` item 16a explains.
+
+Shin (1993) and equal margin give identical numbers because, for a
+two-outcome bet, they're the same rule. Clarke, Kovalchik and Ingram
+(2017) proved this. `src/shin_equivalence_proof.py` checks it against
+every game to machine precision (largest error 3.3e-16).
+
+### Dependence
+
+The gap is +0.58 under every variance estimator. Only the standard error
+moves, from 0.39 to 0.53 points against the Poisson-binomial 0.47, and
+none of the six rejects. The season-blocked bootstrap gives -0.19 to
++1.26 points. The secondary calibration regression is shakier: its joint
+p is .293 with plain errors, .085 clustered by season, and .037 two-way,
+the last on only 13 seasons. I read that slope as unresolved, not
+confirmed.
+
+### Power
+
+80 percent power at 1.33 points. Over 99.9 percent at the break-even. A
+74-game bucket near .85, the kind past studies often report, has about 11
+percent at the same break-even.
+
+![Power of this test against a 74-game bucket](figures/abstract_fig2_power.png)
+
+### Buckets, Holm corrected
+
+| Bucket | Games | Observed | Implied | Gap | z | p | Holm p |
 |---|---|---|---|---|---|---|---|
-| (.50, .60] | 4,064 | 54.45% | 55.44% | -0.99 | -1.27 | .204 | .817 |
-| (.60, .70] | 4,447 | 64.11% | 64.85% | -0.74 | -1.04 | .300 | .899 |
-| (.70, .75] | 1,933 | 73.10% | 72.39% | +0.71 | 0.70 | .485 | .970 |
-| (.75, .80] | 1,661 | 79.11% | 77.38% | +1.73 | 1.69 | .091 | .457 |
-| (.80, 1.00] | 3,246 | 86.32% | 86.41% | -0.09 | -0.15 | .880 | .970 |
+| (.50, .60] | 4,064 | 54.45 | 55.44 | -0.99 | -1.27 | .204 | .817 |
+| (.60, .70] | 4,447 | 64.11 | 64.85 | -0.74 | -1.04 | .300 | .899 |
+| (.70, .75] | 1,933 | 73.10 | 72.39 | +0.71 | 0.70 | .485 | .970 |
+| (.75, .80] | 1,661 | 79.11 | 77.38 | +1.73 | 1.69 | .091 | .457 |
+| (.80, 1.00] | 3,246 | 86.32 | 86.41 | -0.09 | -0.15 | .880 | .970 |
 
-**Vig-removal robustness.** The primary test re-run under five normalizations.
-Four of five leave the gap below that rule's own break-even requirement; power
-normalization does not. The existence, size and sign of estimated favorite bias
-in this market all move with the normalization choice, which is the paper's
-more durable finding.
+Seasons run from -2.82 to +2.52 points and none rejects (smallest
+p = .107). Cochran Q = 8.37 on 12 df, p = .756.
 
-| Rule | n | Gap (pp) | p | Break-even (pp) | Verdict |
-|---|---|---|---|---|---|
-| None, raw probabilities | 8,014 | -2.50 | <.001 | — | artifact |
-| Proportional (primary) | 6,840 | +0.58 | .223 | 3.01 | below |
-| Additive, equal margin | 7,120 | -0.60 | .186 | 1.88 | below |
-| Shin (1993) | 7,120 | -0.60 | .186 | 1.88 | below |
-| Constant odds ratio | 7,202 | -0.74 | .104 | 1.79 | below |
-| Power | 7,211 | -1.31 | .004 | 1.24 | **exceeds** |
+### Returns
 
-For a two-outcome book Shin's rule coincides exactly with the additive rule.
-Proved in `src/shin_equivalence_proof.py`, which derives the result and checks
-every step against the sample to machine precision (max error 3.3e-16). The
-recovered insider share z runs 0.4% to 7.2%, so these are genuine Shin
-solutions, not a degenerate case.
+Flat one-unit bets at the quoted prices.
 
-**Dependence robustness.** The gap is +0.58 pp under every variance estimator;
-only the standard error moves, from 0.39 to 0.53 pp against the
-Poisson-binomial 0.47. None of the six rejects calibration. The secondary
-calibration regression is less stable: joint Wald p is .293 classical, .085
-clustered on season, .037 two-way on season and team, the last on only 13
-clusters where cluster-robust variance is unreliable.
-
-**Power.** 80% at the 1.33 pp minimum detectable effect, >99.9% at the 3.01 pp
-break-even requirement. The MDE is the conventional normal approximation; the
-exact Poisson-binomial inversion gives 1.3242 pp, a difference of 0.004 pp,
-and the exact two-sided rejection region is 5,425 wins or fewer or 5,554 or
-more with true size .0484.
-
-Every mark on Figure 3 is computed from this sample. An earlier draft marked
-1.7 and 5.1 pp as the smallest and largest favorite-bias effects in the cited
-literature. Neither could be traced to any source in that citation set: six of
-the eight cited papers report rates of return or point-spread cover rates
-rather than win-probability calibration gaps, and the one literature review
-among them reports no magnitudes at all. They were removed rather than
-re-sourced. See `docs/errata.md` item 11.
-
-![Power of the primary test against a true calibration gap](figures/figure3_power.png)
-
-*Figure 3. Power against a true calibration gap. Every mark is computed from this sample: the observed +0.58 pp gap, the 1.33 pp minimum detectable effect, and the 3.01 pp break-even requirement.*
-
-**Seasons:** season gaps range -2.82 to +2.52 pp, none rejecting
-(smallest p = .107). Cochran Q = 8.37 on 12 df, p = .756, I-squared 0
-percent. The tail above .90 (756 games) shows +0.63 pp, p = .506.
-
-**Returns**, flat one-unit stakes at quoted prices:
-
-| Group | Return | 95% CI |
+| Group | Return | 95 percent CI |
 |---|---|---|
-| All favorites | -4.06% | -5.13 to -3.00 |
-| All underdogs | -3.91% | -6.57 to -1.25 |
-| Favorites above .70 | -2.90% | -4.04 to -1.75 |
+| All favorites | -4.06 percent | -5.13 to -3.00 |
+| All underdogs | -3.91 percent | -6.57 to -1.25 |
+| Favorites above .70 | -2.90 percent | -4.04 to -1.75 |
 
-Losses track the mean overround. Money is lost in every direction, which is
-what a calibrated market with a margin looks like.
+You lose money every way you cut it, which is what a calibrated market
+with a margin looks like.
 
-![Flat-stake returns on favorites by price](figures/figure2_returns.png)
+## What this doesn't rule out
 
-*Figure 2. Flat one-dollar stakes on the favorite at the quoted price, by bucket, with 95% intervals. The expected-return marker is computed from the actual quoted odds in each bucket.*
+- biases in situations outside the slices I set in advance
+- mispricing at a single sportsbook
+- edges in opening lines
+- edges from shopping for the best price across books
 
-## Scope of the null
+It also says nothing about betting after March 2020, when legal sports
+betting expanded across the US.
 
-The result does **not** rule out:
-
-- localized situational biases outside the pre-specified slices
-- mispricing at individual books
-- inefficiency in opening lines
-- edges available through best-price shopping across books
-
-The sample is regular season only and ends in March 2020, where the source
-archive ends. It therefore predates the subsequent expansion of US legal
-sports betting; no claim is made here about whether that expansion changed
-market behavior.
-
-## Requirements
-
-Python 3.9 or later. `numpy`, `pandas`, `scipy`, `statsmodels`,
-`matplotlib`. See `requirements.txt`.
-
-## Citation
+## Cite it
 
 ```bibtex
-@misc{burdier2026moneyline,
+@misc{burdier2026vig,
   author = {Burdier, Jacob},
-  title  = {Are {NBA} Consensus Moneylines Calibrated? A Pre-Specified
-            Test for Favorite Bias in 15,351 Games},
+  title  = {Vig Removal Changes the Answer: A Pre-Specified Calibration
+            Test of 15,351 Archived {NBA} Moneylines},
   year   = {2026},
-  note   = {Replication materials},
+  note   = {Replication materials. ORCID 0009-0004-9468-6513},
   url    = {https://github.com/jacobburdier05/nba-moneyline-calibration}
 }
 ```
 
+## Requirements
+
+Python 3.9 or later with `numpy`, `pandas`, `scipy`, `statsmodels` and
+`matplotlib`. See `requirements.txt`.
+
 ## License
 
-Code is MIT licensed. See `LICENSE`. Source data belongs to its original
-publishers and is redistributed here under the terms of the upstream
-repository for replication purposes only.
-
-## AI disclosure
-
-AI tools assisted with code generation, statistical checking, data
-verification, and editing. The study design, assumptions, results, and
-final claims are the author's responsibility. No AI-generated source or
-statistic is cited as evidence.
+Code is MIT licensed, see `LICENSE`. The source data belongs to its
+original publishers and is shared here under the upstream repository's
+terms, for replication only.
